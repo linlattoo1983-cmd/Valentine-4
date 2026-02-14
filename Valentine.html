@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Message For You</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      /* Keep your background images named correctly in your folder */
+      background: #000 url("background2.jpg") center center / cover no-repeat fixed;
+      font-family: 'Georgia', serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      z-index: 0;
+    }
+
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .floating-start {
+      font-size: 0.9rem;
+      letter-spacing: 6px;
+      animation: float 3s ease-in-out infinite;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); opacity: 0.4; }
+      50% { transform: translateY(-10px); opacity: 0.9; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      width: 85%;
+      max-width: 500px;
+      display: none;
+    }
+
+    .page { display: none; animation: fadeIn 1.5s ease-in-out; }
+    .active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .message-body {
+      font-size: clamp(1rem, 4.5vw, 1.1rem);
+      line-height: 1.8;
+      font-weight: 300;
+      text-shadow: 2px 2px 15px rgba(0,0,0,0.5);
+      margin-bottom: 40px;
+    }
+
+    .nav-btn {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 12px 25px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      transition: 0.4s;
+      text-transform: uppercase;
+    }
+    .nav-btn:hover { background: white; color: black; border-color: white; }
+
+    /* Softened the pink to a dusty rose for a more mature look */
+    .dumbass-text { color: #d4a5a5; font-style: italic; display: block; margin-top: 25px; font-size: 1.2rem; }
+    .photo img { width: 100%; max-width: 250px; border-radius: 10px; margin-top: 25px; filter: grayscale(20%); box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+
+    #mute-btn { position: fixed; bottom: 20px; right: 20px; z-index: 1001; background: none; border: none; color: white; font-size: 1.2rem; opacity: 0.5; cursor: pointer; display: none; }
+  </style>
+</head>
+<body>
+
+  <div id="overlay" onclick="startExperience()">
+    <div class="floating-start">TAP TO OPEN</div>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="music2.mp3" type="audio/mpeg">
+  </audio>
+
+  <button id="mute-btn" onclick="toggleMute()">🔊</button>
+
+  <div class="container" id="main-content">
+    
+    <div class="page active" id="p1">
+      <div class="message-body">
+        We had our Valentine’s days once.<br><br>
+        Laughs that felt endless,<br>moments that felt like home.<br><br>
+        What we had was real,<br>and I'll always value that.
+      </div>
+      <button class="nav-btn" onclick="nextPage()">CONTINUE</button>
+    </div>
+
+    <div class="page" id="p2">
+      <div class="message-body">
+        I still come across your reposts sometimes.<br><br>
+        They usually make me smile.<br><br>
+        It’s a nice way to remember the parts of us<br>that actually worked.
+      </div>
+      <button class="nav-btn" onclick="nextPage()">CONTINUE</button>
+    </div>
+
+    <div class="page" id="p3">
+      <div class="message-body">
+        I'll be honest, I struggled for a while.<br><br>
+        The silence after that one drunken "I love you" stung for a bit.<br><br>
+        But I’ve had time to think, and I get it now.
+      </div>
+      <button class="nav-btn" onclick="nextPage()">CONTINUE</button>
+    </div>
+
+    <div class="page" id="p4">
+      <div class="message-body">
+        I’ve been quiet mostly because I didn't know<br>how to move past what I said on New Year’s.<br><br>
+        I didn't know how to face you,<br>so I just stayed away.<br><br>
+        This felt like a better way to reach out.
+      </div>
+      <button class="nav-btn" onclick="nextPage()">CONTINUE</button>
+    </div>
+
+    <div class="page" id="p5">
+      <div class="message-body">
+        Time changes people, and sometimes<br>love just changes shape.<br><br>
+        Some chapters end because they’ve taught us<br>everything they were meant to.<br><br>
+        We’ve just grown into different people.
+      </div>
+      <button class="nav-btn" onclick="nextPage()">CONTINUE</button>
+    </div>
+
+    <div class="page" id="p6">
+      <div class="message-body">
+        Happy Valentine’s Day.<br><br>
+        I hope you’re doing well, even if I’m no longer<br>the one hearing about it.<br><br>
+        Some people aren't meant to stay forever<br>sometimes they're just meant to change you.
+      </div>
+      <button class="nav-btn" onclick="nextPage()">ONE LAST THING</button>
+    </div>
+
+    <div class="page" id="p7">
+      <div class="message-body">
+        Everything I said stands.<br><br>
+        <span class="dumbass-text">Just try your best not to be a complete dumbass today.</span>
+      </div>
+      <div class="photo"><img src="photo.jpg" alt="Memory"></div>
+      <br>
+      <button class="nav-btn" onclick="location.reload()">RE-READ</button>
+    </div>
+
+  </div>
+
+  <script>
+    let currentPage = 1;
+    const totalPages = 7; 
+    const audio = document.getElementById('bg-music');
+
+    function startExperience() {
+      audio.volume = 0.4;
+      audio.play().catch(e => console.log("Audio blocked"));
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+      document.getElementById('mute-btn').style.display = 'block';
+    }
+
+    function nextPage() {
+      if (currentPage < totalPages) {
+        document.getElementById('p' + currentPage).classList.remove('active');
+        currentPage++;
+        document.getElementById('p' + currentPage).classList.add('active');
+      }
+      if (audio.paused) audio.play();
+    }
+
+    function toggleMute() {
+      audio.muted = !audio.muted;
+      document.getElementById('mute-btn').innerText = audio.muted ? '🔇' : '🔊';
+    }
+  </script>
+</body>
+</html>
